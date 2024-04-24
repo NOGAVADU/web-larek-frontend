@@ -204,10 +204,12 @@ yarn build
 Класс отвечает за работу с модальными окнами.
 
 #### Поля класа
+
 * `closeButton: HTMLButtonElement` - элемент с кнопкой закрытия модального окна
 * `content: HTMLElement` - элемент с контентом модального окна
 
 #### Конструтор класса
+
 * `container: HTMLElement` - элемент контента главной страницы
 * `events: IEvents` - ссылка на менеджер событий
 
@@ -347,3 +349,37 @@ yarn build
 
 ## Основные типы данных и интерфейсы
 
+``export interface IProductItem {
+id: string;
+description: string;
+image: string;
+title: string;
+category: string;
+price: number;
+}``
+
+``export type PaymentMethod = 'online' | 'offline'``
+
+``export interface IOrderForm {
+paymentMethod: PaymentMethod;
+address: string;
+mail: string;
+phone: string;
+}``
+
+``export interface IOrder extends IOrderForm {
+items: IProductItem[];
+}``
+
+``export interface IOrderResult {
+result: { id: string, total: number } | { error: string };
+}``
+
+``export type FormErrors = Partial<Record<keyof IOrder, string>>;``
+
+``export interface IAppState {
+catalog: IProductItem[];
+basket: IProductItem[];
+order: IOrder | null;
+formErrors: FormErrors;
+}``
