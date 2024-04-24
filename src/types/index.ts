@@ -1,4 +1,4 @@
-export interface IItemCard {
+export interface IProductItem {
 	id: string;
 	description: string;
 	image: string;
@@ -17,17 +17,18 @@ export interface IOrderForm {
 }
 
 export interface IOrder extends IOrderForm {
-	info: string[];
-	items: IItemCard[];
+	items: IProductItem[];
 }
 
 export interface IOrderResult {
 	result: { id: string, total: number } | { error: string };
 }
 
+export type FormErrors = Partial<Record<keyof IOrder, string>>;
+
 export interface IAppState {
-	catalog: IItemCard[];
-	basket: IItemCard[];
+	catalog: IProductItem[];
+	basket: IProductItem[];
 	order: IOrder | null;
-	loading: boolean;
+	formErrors: FormErrors;
 }
