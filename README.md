@@ -13,7 +13,7 @@
 - src/pages/index.html — HTML-файл главной страницы
 - src/types/index.ts — файл с типами
 - src/index.ts — точка входа приложения
-- src/styles/styles.scss — корневой файл стилей
+- src/scss/styles.scss — корневой файл стилей
 - src/utils/constants.ts — файл с константами
 - src/utils/utils.ts — файл с утилитами
 
@@ -46,6 +46,15 @@ yarn build
 ```
 
 # Документация к проекту
+
+## Описание проекта
+
+Проект является интернет-магазином и представляет собой веб-приложение, разработанное с использованием паттерна
+проектирования MVP (Model-View-Presenter). Он позволяет пользователям просматривать каталог товаров, добавлять их в
+корзину, оформлять заказы и просматривать дополнительную информацию о товарах.
+
+Взаимодействие между классами происходит через событийную модель и прямые вызовы методов, позволяя каждому классу
+эффективно выполнять свою функцию и реагировать на изменения в приложении.
 
 ## Базовый код
 
@@ -81,7 +90,7 @@ yarn build
 
 ### class Model
 
-Абстрактный базовый класс, предназначенный для создания модельных данных. Модели используются для представления и
+Абстрактный базовый класс, предназначенный для создания моделей данных. Модели используются для представления и
 управления данными в приложении.
 
 #### Конструктор класса:
@@ -95,9 +104,9 @@ yarn build
 
 ### class Component
 
-Абстракный базовый класс, являющий основной для создания пользовательского интерфейса.
+Абстрактный базовый класс, являющий основной для создания пользовательского интерфейса.
 
-#### Конструтор класса
+#### Конструктор класса
 
 * `container: HTMLElement` - DOM элемент для расположения дочерних элементов
 
@@ -127,7 +136,9 @@ yarn build
 
 ### class AppState
 
-Класс, расширяющий базовый класс Model, предназначенный для получения и управления состояниями приложения
+Класс, расширяющий базовый класс Model, храняющий в себе информацию о приложении и его состояния. Хранит в себе
+значениях
+всех основных элементов страницы (Корзины, галлереи, заказа), а также позволяет изменять их.
 
 #### Поля класа
 
@@ -152,26 +163,8 @@ yarn build
 * `validateOrderAddress` - проверяет внесены ли данные в форме с адрессом
 * `validateOrderContacts` - проверяет внесены ли данные в форме с контактными данными
 * `resetOrder` - очистка всей формы заказа
-
-### class ProductItem
-
-Класс, расширяющий базовый класс Model, предназначеннйы для получения данных продукта и изменения его состояний
-
-#### Конструтор класса
-
-* `id: string`
-* `description: string`
-* `image: string`
-* `title: string`
-* `category: string`
-* `price: number`
-* `inBasket: boolean`
-
-#### Методы класса
-
 * `addToBasket(id: string)` - добавление продукта в корзину
 * `removeFromBasket(id: string)` - удаление продукта из корзины
-* `get product` - получение данных продукта
 
 ## Компоненты представления
 
@@ -188,7 +181,7 @@ yarn build
 * `wrapper: HTMLElement` - элемент контента главной страницы
 * `basket: HTMLElement` - элемент значка корзины
 
-#### Конструтор класса
+#### Конструктор класса
 
 * `container: HTMLElement` - элемент контента главной страницы
 * `events: IEvents` - ссылка на менеджер событий
@@ -208,7 +201,7 @@ yarn build
 * `closeButton: HTMLButtonElement` - элемент с кнопкой закрытия модального окна
 * `content: HTMLElement` - элемент с контентом модального окна
 
-#### Конструтор класса
+#### Конструктор класса
 
 * `container: HTMLElement` - элемент контента главной страницы
 * `events: IEvents` - ссылка на менеджер событий
@@ -229,7 +222,7 @@ yarn build
 * `submit: HTMLButtonElement` - элемент кнопки для отправки\продолжения формы
 * `errors: HTMLElement` - элемент для отображения ошибок валидации формы
 
-#### Конструтор класса
+#### Конструктор класса
 
 * `container: HTMLFormElement` - элемент компонента формы
 * `events: IEvents` - ссылка на менеджер событий
@@ -251,7 +244,7 @@ yarn build
 * `offlinePayment: HTMLElement` - элемент кнопки оплаты при получении
 * `addressInput: HTMLElement` - элемент инпута для адресса покупателя
 
-#### Конструтор класса
+#### Конструктор класса
 
 * `container: HTMLFormElement` - элемент компонента формы
 * `events: IEvents` - ссылка на менеджер событий
@@ -265,7 +258,7 @@ yarn build
 * `emailInput: HTMLElement` - элемент кнопки оплаты картой
 * `phoneInput: HTMLElement` - элемент кнопки оплаты при получении
 
-#### Конструтор класса
+#### Конструктор класса
 
 * `container: HTMLFormElement` - элемент компонента формы
 * `events: IEvents` - ссылка на менеджер событий
@@ -273,57 +266,24 @@ yarn build
 ### class ProductCard
 
 Класс описывает компонент карточки товара, наследуется от базового класса Component.
-Данный класс служит для отображения карточки и информации по ней в галлереи товаров
-
-#### Поля класа
-
-* `title: HTMLElement;` - элемент названия продукта
-* `image: HTMLImageElement;` - элемент изображения продукта
-* `category: HTMLElement` - элемент блока с категорией продукта
-* `price: HTMLElement` - элемент блока с ценой продукта
-
-#### Конструтор класса
-
-* `blockName: string` - название блока
-* `container: HTMLElement` - контейнер для элемента
-* `actions?: ICardActions` - события элемента
-
-### class ProductCardModal
-
-Класс описывает компонент карточки товара, наследуется от класса ProductCard.
-Данный класс служит для отображения карточки и информации при открытии модального окна
-
-#### Поля класа
-
-* `title: HTMLElement;` - элемент названия продукта
-* `image: HTMLImageElement;` - элемент изображения продукта
-* `category: HTMLElement` - элемент блока с категорией продукта
-* `price: HTMLElement` - элемент блока с ценой продукта
-* `description: HTMLElement;` - элемент описания продукта
-* `button: HTMLButtonElement` - элемент кнопки для добавления товара в корзину
-
-#### Конструтор класса
-
-* `blockName: string` - название блока
-* `container: HTMLElement` - контейнер для элемента
-* `actions?: ICardActions` - события элемента
-
-### class ProductCardBasket
-
-Класс описывает компонент карточки товара, наследуется от класса ProductCard.
-Данный класс служит для отображения карточки и информации в корзине
+Данный класс служит для отображения карточки и информации по ней в галлерии, модальномо окне, корзине
 
 #### Поля класа
 
 * `title: HTMLElement;` - элемент названия продукта
 * `price: HTMLElement` - элемент блока с ценой продукта
-* `delete: HTMLButtonElement` - элемент кнопки для удаления продукта из корзины
+* `description?: HTMLElement;` - элемент описания продукта
+* `category?: HTMLElement` - элемент блока с категорией продукта
+* `image?: HTMLImageElement;` - элемент изображения продукта
+* `button?: HTMLButtonElement` - элемент кнопки для добавления товара в корзину
+* `delete?: HTMLButtonElement` - элемент кнопки для удаления продукта из корзины
 
-#### Конструтор класса
+#### Конструктор класса
 
-* `blockName: string` - название блока
+* `blockName: string` - Название родительского селектора, для доступа к элементам (Пример: blockName = catalog =>
+  catalog-button = {blockName}-button
 * `container: HTMLElement` - контейнер для элемента
-* `actions?: ICardActions` - события элемента
+* `actions?: ICardActions` - Передача в класс необходимых коллбэков для обработки событий в карточке товара
 
 ### class Basket
 
@@ -335,11 +295,12 @@ yarn build
 * `total: HTMLElement` - элемент общей стоимости заказа
 * `submit: HTMLButtonElement` - элемент кнопки для подтверждения заказа
 
-#### Конструтор класса
+#### Конструктор класса
 
-* `blockName: string` - название блока
+* `blockName: string` - Название родительского селектора, для доступа к элементам (Пример: blockName = catalog =>
+  catalog-button = {blockName}-button
 * `container: HTMLElement` - контейнер для элемента
-* `actions?: ICardActions` - события элемента
+* `actions?: IBasketActions` - Передача в класс необходимых коллбэков для обработки событий в корзине товаров
 
 #### Методы класса
 
@@ -349,37 +310,49 @@ yarn build
 
 ## Основные типы данных и интерфейсы
 
-``export interface IProductItem {
+``
+interface ICardActions {
+onClick: (event: MouseEvent) => void;
+}
+`` - интерфейс для коллбэков в карточке товара
+
+``
+interface IBasketActions {
+onClick: (event: MouseEvent) => void;
+}
+`` - интрефейс для коллбэков в корзине
+
+``interface IProductItem {
 id: string;
 description: string;
 image: string;
 title: string;
 category: string;
 price: number;
-}``
+}`` - интерфейс для товаров. Требуется для отображения корректной информации с API
 
-``export type PaymentMethod = 'online' | 'offline'``
+``type PaymentMethod = 'online' | 'offline'`` - Методы оплаты товара online - онлайн\ offline - при получении
 
-``export interface IOrderForm {
+``interface IOrderForm {
 paymentMethod: PaymentMethod;
 address: string;
 mail: string;
 phone: string;
-}``
+}`` - интерфейс для хранения полной информации с формы заказа
 
-``export interface IOrder extends IOrderForm {
+``interface IOrder extends IOrderForm {
 items: IProductItem[];
-}``
+}`` - интрефейс, расширяющий IOrderForm, содержающий также массив товаро из корзины
 
-``export interface IOrderResult {
+``interface IOrderResult {
 result: { id: string, total: number } | { error: string };
-}``
+}`` - интерфейс для ответа сервера о совершении заказа
 
-``export type FormErrors = Partial<Record<keyof IOrder, string>>;``
+``type FormErrors = Partial<Record<keyof IOrder, string>>;`` - интерфейс для ошибок в форме
 
-``export interface IAppState {
+``interface IAppState {
 catalog: IProductItem[];
 basket: IProductItem[];
 order: IOrder | null;
 formErrors: FormErrors;
-}``
+}`` - интрефейся для хранения всех основных элементов страницы

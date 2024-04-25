@@ -1,3 +1,10 @@
+interface ICardActions {
+	onClick: (event: MouseEvent) => void;
+}
+interface IBasketActions {
+	onClick: (event: MouseEvent) => void;
+}
+
 export interface IProductItem {
 	id: string;
 	description: string;
