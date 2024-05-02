@@ -12,19 +12,25 @@ export interface IProductItem {
 	title: string;
 	category: string;
 	price: number;
+	inBasket: boolean;
+	basketIndex: number;
 }
 
-export type PaymentMethod = 'online' | 'offline'
-
-export interface IOrderForm {
-	paymentMethod: PaymentMethod;
+export interface IOrderAddress {
+	payment: string;
 	address: string;
-	mail: string;
+}
+
+export interface IOrderContacts{
+	email: string;
 	phone: string;
 }
 
+export interface IOrderForm extends IOrderAddress, IOrderContacts {}
+
 export interface IOrder extends IOrderForm {
-	items: IProductItem[];
+	items: string[];
+	total: number
 }
 
 export interface IOrderResult {
