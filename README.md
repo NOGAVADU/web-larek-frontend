@@ -132,7 +132,7 @@ index.ts
 
 * `getProductById(id: string): ProductItem` - получение одного продукта по Id
 * `getAllProducts(): ProductItem[]` - получение всех продуктов
-* `CreateOrder` - оформление заказа
+* `createOrder(order: IOrder): IOrder` - оформление заказа
 
 ## Компоненты модели данных
 
@@ -153,6 +153,7 @@ index.ts
   phone: '',
   items: []
   }` - состояние и значения заказа
+* `total: number` - общая стоимость товаров
 * `formErrors: FormErrors = {}` - ошибки при заполнении формы
 
 #### Методы класса
@@ -242,23 +243,21 @@ index.ts
 
 #### Поля класа
 
-* `onlinePayment: HTMLElement` - элемент кнопки оплаты картой
-* `offlinePayment: HTMLElement` - элемент кнопки оплаты при получении
-* `addressInput: HTMLElement` - элемент инпута для адресса покупателя
+* `_buttons: HTMLButtonElement[]` - элемент кнопки оплаты картой
+
 
 #### Конструктор класса
 
 * `container: HTMLFormElement` - элемент компонента формы
 * `events: IEvents` - ссылка на менеджер событий
 
+### Методы класса 
+
+*`setPayment(name: string)` - изменение способа оплаты
+
 ### class OrderFormContacts
 
-Класс, расширяющий стандартный компонент формы. Содержит состояния второй страницы оформления заказа
-
-#### Поля класа
-
-* `emailInput: HTMLElement` - элемент кнопки оплаты картой
-* `phoneInput: HTMLElement` - элемент кнопки оплаты при получении
+Класс, расширяющий стандартный компонент формы, реализуя интерфейс `IOrderContacts`. Содержит состояния второй страницы оформления заказа
 
 #### Конструктор класса
 
@@ -277,9 +276,10 @@ index.ts
 * `description?: HTMLElement;` - элемент описания продукта
 * `category?: HTMLElement` - элемент блока с категорией продукта
 * `image?: HTMLImageElement;` - элемент изображения продукта
-* `button?: HTMLButtonElement` - элемент кнопки для добавления товара в корзину
-* `delete?: HTMLButtonElement` - элемент кнопки для удаления продукта из корзины
+* `button?: HTMLButtonElement` - элемент кнопки, если он есть в разметке
+* `basketIndex?: HTMLElement` - элемент индекса товара в корзине
 
+ 
 #### Конструктор класса
 
 * `blockName: string` - Название родительского селектора, для доступа к элементам (Пример: blockName = catalog =>
